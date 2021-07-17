@@ -52,7 +52,8 @@ ecuaciones <- list(
   "selva" = list(
     Rnol = function(x,y) -1.252+2.5882*x/y, # x= dT; y=N
     Ea = function(x,y) -2.108+0.095*x+0.186*y, # x=Tmax, y=dT
-    Qi = function(x,y,z) x*(0.27+0.38*y/z) # x=Qs, y=dT, z=N 
+    # Qi = function(x,y,z) x*(0.27+0.38*y/z) # x=Qs, y=n, z=N
+    Qi = function(x,y,z) x*(0.0188+0.49848*y/z) # x=Qs, y=dT, z=N 
   )
 )
 
@@ -121,7 +122,8 @@ evapPM <- function(arch, alt, lat, alb, zon){
   Qs = 37.211*dmd*(H*sin(lat_rad)*sin(dec_sol)+cos(lat_rad)*cos(dec_sol)*sin(H))
   # Qi (MJ/m2.dia)
   if(zon == "selva"){
-    Qi = ecuaciones[[zon]]$Qi(deltaT, N)
+    # Qi = ecuaciones[[zon]]$Qi(deltaT, n, N)
+    Qi = ecuaciones[[zon]]$Qi(Qs, deltaT, N)
   } else {
     Qi = ecuaciones[[zon]]$Qi(Qs, deltaT, N)
   }
